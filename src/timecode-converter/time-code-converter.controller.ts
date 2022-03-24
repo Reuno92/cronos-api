@@ -19,7 +19,13 @@ export class TimeCodeConverterController {
         timecode.toString(),
         Number(framerate),
       );
-      return res.status(HttpStatus.OK).json({ result: RESULT });
+      return res.status(HttpStatus.OK).json({
+        result: RESULT,
+        queries: {
+          timecode: timecode,
+          framerate: framerate,
+        },
+      });
     } catch (e: any) {
       return res.status(HttpStatus.CONFLICT).json({ error: e?.message });
     }
@@ -59,7 +65,14 @@ export class TimeCodeConverterController {
         Number(framerate),
       );
 
-      return res.status(HttpStatus.OK).json({ result: RESULT });
+      return res.status(HttpStatus.OK).json({
+        result: RESULT,
+        queries: {
+          time: time,
+          unit: unit,
+          framerate: framerate,
+        },
+      });
     } catch (e: any) {
       return res.status(HttpStatus.CONFLICT).json({ error: e?.message });
     }
@@ -76,7 +89,13 @@ export class TimeCodeConverterController {
         timecode.toString(),
         Number(framerate),
       );
-      return res.status(HttpStatus.OK).json({ result: RESULT });
+      return res.status(HttpStatus.OK).json({
+        result: RESULT,
+        queries: {
+          timecode: timecode,
+          framerate: framerate,
+        },
+      });
     } catch (e: any) {
       return res.status(HttpStatus.CONFLICT).json({ error: e?.message });
     }
@@ -93,7 +112,13 @@ export class TimeCodeConverterController {
         timecode.toString(),
         Number(framerate),
       );
-      return res.status(HttpStatus.OK).json({ result: RESULT });
+      return res.status(HttpStatus.OK).json({
+        result: RESULT,
+        queries: {
+          timecode: timecode,
+          framerate: framerate,
+        },
+      });
     } catch (e: any) {
       return res.status(HttpStatus.CONFLICT).json({ error: e?.message });
     }
@@ -113,7 +138,16 @@ export class TimeCodeConverterController {
         },
         Number(framerate),
       );
-      return res.status(HttpStatus.OK).json({ result: RESULT });
+      return res.status(HttpStatus.OK).json({
+        result: RESULT,
+        queries: {
+          time: {
+            start: start,
+            end: end,
+          },
+          framerate: framerate,
+        },
+      });
     } catch (e: any) {
       return res.status(HttpStatus.CONFLICT).json({ error: e?.message });
     }
@@ -133,7 +167,16 @@ export class TimeCodeConverterController {
         },
         Number(framerate),
       );
-      return res.status(HttpStatus.OK).json({ result: RESULT });
+      return res.status(HttpStatus.OK).json({
+        result: RESULT,
+        queries: {
+          time: {
+            start: start,
+            end: end,
+          },
+          framerate: framerate,
+        },
+      });
     } catch (e: any) {
       return res.status(HttpStatus.CONFLICT).json({ error: e?.message });
     }
