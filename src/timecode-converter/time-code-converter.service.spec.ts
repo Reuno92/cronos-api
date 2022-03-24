@@ -85,4 +85,46 @@ describe('TimecodeConverterService', () => {
     it('should return 04:10:00:00 with 15000 seconds and 25 frames rate', () =>
       expect(service?.calculateTimeCode(15000, 25)).toEqual('04:10:00:00'));
   });
+
+  describe('Addition between two time code', () => {
+    it('should return 24 frames with 10 frames, 14 frames and 25 frames rate', () =>
+      expect(
+        service?.calculateAddition(
+          { start: '00:00:00:10', end: '00:00:00:14' },
+          25,
+        ),
+      ).toEqual('00:00:00:24'));
+
+    it('should return 1 second with 10 frames, 15 frames and 25 frames rate', () =>
+      expect(
+        service?.calculateAddition(
+          { start: '00:00:00:10', end: '00:00:00:15' },
+          25,
+        ),
+      ).toEqual('00:00:01:00'));
+
+    it('should return 4 seconds with 1 second 10 frames, 2 seconds 15 frames and 25 frames rate', () =>
+      expect(
+        service?.calculateAddition(
+          { start: '00:00:01:10', end: '00:00:02:15' },
+          25,
+        ),
+      ).toEqual('00:00:04:00'));
+
+    it('should return 3 minutes 30 seconds with 1 minute, 2 minutes 30 seconds and 25 frames rate', () =>
+      expect(
+        service?.calculateAddition(
+          { start: '00:01:00:00', end: '00:02:30:00' },
+          25,
+        ),
+      ).toEqual('00:03:30:00'));
+
+    it('should return 1 heure 3 minutes 4 seconds with 30 minutes 36 seconds 22 frames, 32 minutes 27 seconds 3 frames and 25 frames rate', () =>
+      expect(
+        service?.calculateAddition(
+          { start: '00:30:36:22', end: '00:32:27:03' },
+          25,
+        ),
+      ).toEqual('01:03:04:00'));
+  });
 });
