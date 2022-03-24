@@ -47,4 +47,22 @@ describe('TimecodeConverterService', () => {
       expect(service?.calculateSeconds('02:00:00:00', 25)).toEqual(7200);
     });
   });
+
+  describe('Calculate milliseconds feature', () => {
+    it('should return 1000 millseconds with 1 second and 25 frames rate', () =>
+      expect(service.calculateMilliseconds('00:00:01:00', 25)).toEqual(1000));
+
+    it('should return 60000 milliseconds with 1 minute and 25 frames rate', () =>
+      expect(service?.calculateMilliseconds('00:01:00:00', 25)).toEqual(60000));
+
+    it('should return 150000 milliseconds with 2 minutes 30 seconds and 25 frames rate', () =>
+      expect(service?.calculateMilliseconds('00:02:30:00', 25)).toEqual(
+        150000,
+      ));
+
+    it('should return 3600000 milliseconds with 1 hour and 25 frames rate', () =>
+      expect(service?.calculateMilliseconds('01:00:00:00', 25)).toEqual(
+        3600000,
+      ));
+  });
 });
