@@ -128,36 +128,37 @@ describe('TimecodeConverterService', () => {
       ).toEqual('01:03:04:00'));
   });
 
-  describe('Subtraction between two time code', () =>
+  describe('Subtraction between two time code', () => {
     it('should return 1 second with 5 seconds, 4 seconds and 25 frames rate', () =>
       expect(
         service?.calculateSubtraction(
-        { start: '00:00:05:00', end: '00:00:04:00' },
-        25,
-      ),
-    ).toEqual('00:00:01:00'));
+          { start: '00:00:05:00', end: '00:00:04:00' },
+          25,
+        ),
+      ).toEqual('00:00:01:00'));
 
     it('should return 28 minutes with 1 hour, 32 minutes and 25 frames rate', () =>
       expect(
         service?.calculateSubtraction(
-      { start: '01:00:00:00', end: '00:32:00:00' },
-      25,
-      ),
-    ).toEqual('00:28:00:00'));
+          { start: '01:00:00:00', end: '00:32:00:00' },
+          25,
+        ),
+      ).toEqual('00:28:00:00'));
 
     it('should return 28 minutes with 1 hour, 32 minutes and 25 frames rate', () =>
       expect(
         service?.calculateSubtraction(
-      { start: '02:58:59:10', end: '01:32:15:12' },
-      25,
-      ),
-    ).toEqual('01:26:43:23'));
+          { start: '02:58:59:10', end: '01:32:15:12' },
+          25,
+        ),
+      ).toEqual('01:26:43:23'));
 
     it('should return 28 minutes with 1 hour, 32 minutes and 25 frames rate', () =>
       expect(
         service?.calculateSubtraction(
-      { start: '03:00:00:00', end: '00:08:45:03' },
-      25,
-      ),
-    ).toEqual('02:51:14:22'));
+          { start: '03:00:00:00', end: '00:08:45:03' },
+          25,
+        ),
+      ).toEqual('02:51:14:22'));
+  });
 });
