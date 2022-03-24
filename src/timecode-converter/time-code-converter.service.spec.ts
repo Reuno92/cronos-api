@@ -65,4 +65,24 @@ describe('TimecodeConverterService', () => {
         3600000,
       ));
   });
+
+  describe('Calculate time code feature', () => {
+    it('should return 00:00:01:00 with 1 second and 25 frames rate', () =>
+      expect(service?.calculateTimeCode(1, 25)).toEqual('00:00:01:00'));
+
+    it('should return 00:01:30:00 with 75 seconds and 25 frames rate', () =>
+      expect(service?.calculateTimeCode(75, 25)).toEqual('00:01:15:00'));
+
+    it('should return 00:04:15:00 with 255 seconds and 25 frames rate', () =>
+      expect(service?.calculateTimeCode(255, 25)).toEqual('00:04:15:00'));
+
+    it('should return 01:15:00:00 with 4500 seconds and 25 frames rate', () =>
+      expect(service?.calculateTimeCode(4500, 25)).toEqual('01:15:00:00'));
+
+    it('should return 02:00:00:00 with 7200 seconds and 25 frames rate', () =>
+      expect(service?.calculateTimeCode(7200, 25)).toEqual('02:00:00:00'));
+
+    it('should return 04:10:00:00 with 15000 seconds and 25 frames rate', () =>
+      expect(service?.calculateTimeCode(15000, 25)).toEqual('04:10:00:00'));
+  });
 });
