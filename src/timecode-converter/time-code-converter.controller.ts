@@ -27,7 +27,7 @@ export class TimeCodeConverterController {
         },
       });
     } catch (e: any) {
-      return res.status(HttpStatus.CONFLICT).json({ error: e?.message });
+      return res.status(HttpStatus.INTERNAL_SERVER_ERROR).json({ error: e?.message });
     }
   }
 
@@ -74,7 +74,7 @@ export class TimeCodeConverterController {
         },
       });
     } catch (e: any) {
-      return res.status(HttpStatus.CONFLICT).json({ error: e?.message });
+      return res.status(HttpStatus.INTERNAL_SERVER_ERROR).json({ error: e?.message });
     }
   }
 
@@ -97,7 +97,7 @@ export class TimeCodeConverterController {
         },
       });
     } catch (e: any) {
-      return res.status(HttpStatus.CONFLICT).json({ error: e?.message });
+      return res.status(HttpStatus.INTERNAL_SERVER_ERROR).json({ error: e?.message });
     }
   }
 
@@ -120,7 +120,7 @@ export class TimeCodeConverterController {
         },
       });
     } catch (e: any) {
-      return res.status(HttpStatus.CONFLICT).json({ error: e?.message });
+      return res.status(HttpStatus.INTERNAL_SERVER_ERROR).json({ error: e?.message });
     }
   }
 
@@ -149,7 +149,7 @@ export class TimeCodeConverterController {
         },
       });
     } catch (e: any) {
-      return res.status(HttpStatus.CONFLICT).json({ error: e?.message });
+      return res.status(HttpStatus.INTERNAL_SERVER_ERROR).json({ error: e?.message });
     }
   }
 
@@ -178,7 +178,7 @@ export class TimeCodeConverterController {
         },
       });
     } catch (e: any) {
-      return res.status(HttpStatus.CONFLICT).json({ error: e?.message });
+      return res.status(HttpStatus.INTERNAL_SERVER_ERROR).json({ error: e?.message });
     }
   }
 }
