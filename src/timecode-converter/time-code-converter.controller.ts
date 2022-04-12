@@ -1,12 +1,4 @@
-import {
-  Controller,
-  Get,
-  HttpException,
-  HttpStatus,
-  Req,
-  Res,
-} from '@nestjs/common';
-import { Request, Response } from 'express';
+import { Controller, Get, HttpException, HttpStatus, Query } from '@nestjs/common';
 import { TimeCodeConverterService } from './time-code-converter.service';
 
 @Controller('api/v1/calculate/')
@@ -16,23 +8,19 @@ export class TimeCodeConverterController {
   ) {}
 
   @Get('frames')
-  public getFrameCount(
-    @Req() req: Request,
-    @Res() res: Response,
-  ): Response<any, Record<string, any>> {
+  public getFrameCount(@Query() timecode: string, @Query() framerate: number) {
     try {
-      const { timecode, framerate } = req.query;
       const RESULT = this.timeCodeConverterService?.calculateFrameCount(
-        timecode.toString(),
+        timecode,
         Number(framerate),
       );
-      return res.status(HttpStatus.OK).json({
+      return {
         result: RESULT,
         queries: {
           timecode: timecode,
           framerate: framerate,
         },
-      });
+      };
     } catch (e: any) {
       throw new HttpException(e?.message, HttpStatus.INTERNAL_SERVER_ERROR);
     }
@@ -40,13 +28,12 @@ export class TimeCodeConverterController {
 
   @Get('timecode')
   public getTimeCode(
-    @Req() req: Request,
-    @Res() res: Response,
-  ): Response<any, Record<string, any>> {
+    @Query() time: string,
+    @Query() unit: string,
+    @Query() framerate: number,
+  ) {
     try {
-      const { time, unit, framerate } = req.query;
       let value: number;
-
       switch (unit) {
         // By default is seconds
         case 'seconds':
@@ -62,9 +49,10 @@ export class TimeCodeConverterController {
           value = Number(time) * 3600;
           break;
         default:
-          return res
-            .status(HttpStatus.CONFLICT)
-            .json({ error: 'Unit is not recognized.' });
+          throw new HttpException(
+            { error: 'Unit is not recognized.' },
+            HttpStatus.CONFLICT,
+          );
       }
 
       const RESULT = this.timeCodeConverterService?.calculateTimeCode(
@@ -72,37 +60,33 @@ export class TimeCodeConverterController {
         Number(framerate),
       );
 
-      return res.status(HttpStatus.OK).json({
+      return {
         result: RESULT,
         queries: {
           time: time,
           unit: unit,
           framerate: framerate,
         },
-      });
+      };
     } catch (e: any) {
       throw new HttpException(e?.message, HttpStatus.INTERNAL_SERVER_ERROR);
     }
   }
 
   @Get('seconds')
-  public getSeconds(
-    @Req() req: Request,
-    @Res() res: Response,
-  ): Response<any, Record<string, any>> {
+  public getSeconds(@Query() timecode: string, @Query() framerate: number) {
     try {
-      const { timecode, framerate } = req.query;
       const RESULT = this.timeCodeConverterService?.calculateSeconds(
-        timecode.toString(),
+        timecode,
         Number(framerate),
       );
-      return res.status(HttpStatus.OK).json({
+      return {
         result: RESULT,
         queries: {
           timecode: timecode,
           framerate: framerate,
         },
-      });
+      };
     } catch (e: any) {
       throw new HttpException(e?.message, HttpStatus.INTERNAL_SERVER_ERROR);
     }
@@ -110,22 +94,21 @@ export class TimeCodeConverterController {
 
   @Get('milliseconds')
   public getMilliseconds(
-    @Req() req: Request,
-    @Res() res: Response,
-  ): Response<any, Record<string, any>> {
+    @Query() timecode: string,
+    @Query() framerate: number,
+  ) {
     try {
-      const { timecode, framerate } = req.query;
       const RESULT = this.timeCodeConverterService?.calculateMilliseconds(
-        timecode.toString(),
+        timecode,
         Number(framerate),
       );
-      return res.status(HttpStatus.OK).json({
+      return {
         result: RESULT,
         queries: {
           timecode: timecode,
           framerate: framerate,
         },
-      });
+      };
     } catch (e: any) {
       throw new HttpException(e?.message, HttpStatus.INTERNAL_SERVER_ERROR);
     }
@@ -133,11 +116,11 @@ export class TimeCodeConverterController {
 
   @Get('addition')
   public getAddition(
-    @Req() req: Request,
-    @Res() res: Response,
-  ): Response<any, Record<string, any>> {
+    @Query() start: string,
+    @Query() end: string,
+    @Query() framerate: number,
+  ) {
     try {
-      const { start, end, framerate } = req.query;
       const RESULT = this.timeCodeConverterService?.calculateAddition(
         {
           start: start.toString(),
@@ -145,7 +128,7 @@ export class TimeCodeConverterController {
         },
         Number(framerate),
       );
-      return res.status(HttpStatus.OK).json({
+      return {
         result: RESULT,
         queries: {
           time: {
@@ -154,7 +137,7 @@ export class TimeCodeConverterController {
           },
           framerate: framerate,
         },
-      });
+      };
     } catch (e: any) {
       throw new HttpException(e?.message, HttpStatus.INTERNAL_SERVER_ERROR);
     }
@@ -162,19 +145,19 @@ export class TimeCodeConverterController {
 
   @Get('subtraction')
   public getSubtraction(
-    @Req() req: Request,
-    @Res() res: Response,
-  ): Response<any, Record<string, any>> {
+    @Query() start: string,
+    @Query() end: string,
+    @Query() framerate: number,
+  ) {
     try {
-      const { start, end, framerate } = req.query;
       const RESULT = this.timeCodeConverterService?.calculateSubtraction(
         {
-          start: start.toString(),
-          end: end.toString(),
+          start: start,
+          end: end,
         },
         Number(framerate),
       );
-      return res.status(HttpStatus.OK).json({
+      return {
         result: RESULT,
         queries: {
           time: {
@@ -183,7 +166,7 @@ export class TimeCodeConverterController {
           },
           framerate: framerate,
         },
-      });
+      };
     } catch (e: any) {
       throw new HttpException(e?.message, HttpStatus.INTERNAL_SERVER_ERROR);
     }
