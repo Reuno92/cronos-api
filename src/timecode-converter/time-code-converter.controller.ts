@@ -1,4 +1,11 @@
-import { Controller, Get, HttpStatus, Req, Res } from '@nestjs/common';
+import {
+  Controller,
+  Get,
+  HttpException,
+  HttpStatus,
+  Req,
+  Res,
+} from '@nestjs/common';
 import { Request, Response } from 'express';
 import { TimeCodeConverterService } from './time-code-converter.service';
 
@@ -27,7 +34,7 @@ export class TimeCodeConverterController {
         },
       });
     } catch (e: any) {
-      return res.status(HttpStatus.INTERNAL_SERVER_ERROR).json({ error: e?.message });
+      throw new HttpException(e?.message, HttpStatus.INTERNAL_SERVER_ERROR);
     }
   }
 
@@ -74,7 +81,7 @@ export class TimeCodeConverterController {
         },
       });
     } catch (e: any) {
-      return res.status(HttpStatus.INTERNAL_SERVER_ERROR).json({ error: e?.message });
+      throw new HttpException(e?.message, HttpStatus.INTERNAL_SERVER_ERROR);
     }
   }
 
@@ -97,7 +104,7 @@ export class TimeCodeConverterController {
         },
       });
     } catch (e: any) {
-      return res.status(HttpStatus.INTERNAL_SERVER_ERROR).json({ error: e?.message });
+      throw new HttpException(e?.message, HttpStatus.INTERNAL_SERVER_ERROR);
     }
   }
 
@@ -120,7 +127,7 @@ export class TimeCodeConverterController {
         },
       });
     } catch (e: any) {
-      return res.status(HttpStatus.INTERNAL_SERVER_ERROR).json({ error: e?.message });
+      throw new HttpException(e?.message, HttpStatus.INTERNAL_SERVER_ERROR);
     }
   }
 
@@ -149,7 +156,7 @@ export class TimeCodeConverterController {
         },
       });
     } catch (e: any) {
-      return res.status(HttpStatus.INTERNAL_SERVER_ERROR).json({ error: e?.message });
+      throw new HttpException(e?.message, HttpStatus.INTERNAL_SERVER_ERROR);
     }
   }
 
@@ -178,7 +185,7 @@ export class TimeCodeConverterController {
         },
       });
     } catch (e: any) {
-      return res.status(HttpStatus.INTERNAL_SERVER_ERROR).json({ error: e?.message });
+      throw new HttpException(e?.message, HttpStatus.INTERNAL_SERVER_ERROR);
     }
   }
 }
