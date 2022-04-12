@@ -1,7 +1,6 @@
 import { Test, TestingModule } from '@nestjs/testing';
 import { TimeCodeConverterController } from './time-code-converter.controller';
 import { TimeCodeConverterService } from './time-code-converter.service';
-import DoneCallback = jest.DoneCallback;
 
 describe('TimecodeConverterController', () => {
   let controller: TimeCodeConverterController;
@@ -67,5 +66,38 @@ describe('TimecodeConverterController', () => {
       result: 6310000,
     };
     expect(controller.getMilliseconds('01:45:10:00', 25)).toStrictEqual(result);
+  });
+
+  it('should return 00:04:00:00 with addition route', () => {
+    const result = {
+      queries: {
+        time: {
+          start: '00:03:00:24',
+          end: '00:00:59:01',
+        },
+        framerate: 25,
+      },
+      result: '00:04:00:00',
+    };
+    expect(
+      controller.getAddition('00:03:00:24', '00:00:59:01', 25),
+    ).toStrictEqual(result);
+  });
+
+  it('should return 00:03:00:24 with subtraction route', () => {
+    const result = {
+      queries: {
+        time: {
+          start: '00:04:00:00',
+          end: '00:00:59:01',
+        },
+        framerate: 25,
+      },
+      result: '00:03:00:24',
+    };
+
+    expect(
+      controller.getSubtraction('00:04:00:00', '00:00:59:01', 25),
+    ).toStrictEqual(result);
   });
 });
