@@ -8,8 +8,11 @@ export class TimeCodeConverterController {
   ) {}
 
   @Get('frames')
-  public getFrameCount(@Query() timecode: string, @Query() framerate: number) {
+  public getFrameCount(
+    @Query() queries: { timecode: string; framerate: number },
+  ) {
     try {
+      const { timecode, framerate } = queries;
       const RESULT = this.timeCodeConverterService?.calculateFrameCount(
         timecode,
         Number(framerate),
@@ -28,11 +31,10 @@ export class TimeCodeConverterController {
 
   @Get('timecode')
   public getTimeCode(
-    @Query() time: string,
-    @Query() unit: string,
-    @Query() framerate: number,
+    @Query() queries: { time: number; unit: string; framerate: number },
   ) {
     try {
+      const { time, unit, framerate } = queries;
       let value: number;
       switch (unit) {
         // By default is seconds
@@ -74,8 +76,9 @@ export class TimeCodeConverterController {
   }
 
   @Get('seconds')
-  public getSeconds(@Query() timecode: string, @Query() framerate: number) {
+  public getSeconds(@Query() queries: { timecode: string; framerate: number }) {
     try {
+      const { timecode, framerate } = queries;
       const RESULT = this.timeCodeConverterService?.calculateSeconds(
         timecode,
         Number(framerate),
@@ -94,13 +97,13 @@ export class TimeCodeConverterController {
 
   @Get('milliseconds')
   public getMilliseconds(
-    @Query() timecode: string,
-    @Query() framerate: number,
+    @Query() queries: { timecode: string; framerate: number },
   ) {
     try {
+      const { timecode, framerate } = queries;
       const RESULT = this.timeCodeConverterService?.calculateMilliseconds(
         timecode,
-        Number(framerate),
+        framerate,
       );
       return {
         result: RESULT,
@@ -116,11 +119,10 @@ export class TimeCodeConverterController {
 
   @Get('addition')
   public getAddition(
-    @Query() start: string,
-    @Query() end: string,
-    @Query() framerate: number,
+    @Query() queries: { start: string; end: string; framerate: number },
   ) {
     try {
+      const { start, end, framerate } = queries;
       const RESULT = this.timeCodeConverterService?.calculateAddition(
         {
           start: start.toString(),
@@ -145,11 +147,10 @@ export class TimeCodeConverterController {
 
   @Get('subtraction')
   public getSubtraction(
-    @Query() start: string,
-    @Query() end: string,
-    @Query() framerate: number,
+    @Query() queries: { start: string; end: string; framerate: number },
   ) {
     try {
+      const { start, end, framerate } = queries;
       const RESULT = this.timeCodeConverterService?.calculateSubtraction(
         {
           start: start,
