@@ -1,4 +1,10 @@
-import { Controller, Get, HttpException, HttpStatus, Query } from '@nestjs/common';
+import {
+  Controller,
+  Get,
+  HttpException,
+  HttpStatus,
+  Query,
+} from '@nestjs/common';
 import { TimeCodeConverterService } from './time-code-converter.service';
 
 @Controller('api/v1/calculate/')
@@ -103,7 +109,7 @@ export class TimeCodeConverterController {
       const { timecode, framerate } = queries;
       const RESULT = this.timeCodeConverterService?.calculateMilliseconds(
         timecode,
-        framerate,
+        Number(framerate),
       );
       return {
         result: RESULT,
