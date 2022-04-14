@@ -43,7 +43,7 @@ export class TimeCodeConverterController {
       const { time, unit, framerate } = queries;
       let value: number;
       switch (unit) {
-        // By default is seconds
+        // Default unit is seconds
         case 'seconds':
           value = Number(time);
           break;
@@ -55,6 +55,9 @@ export class TimeCodeConverterController {
           break;
         case 'hours':
           value = Number(time) * 3600;
+          break;
+        case 'frames':
+          value = Number(time) / framerate;
           break;
         default:
           throw new HttpException(

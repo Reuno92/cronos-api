@@ -25,15 +25,29 @@ describe('TimecodeConverterController', () => {
       queries: { framerate: 25, timecode: '00:00:10:00' },
       result: 250,
     };
-    expect(controller.getFrameCount('00:00:10:00', 25)).toStrictEqual(result);
+    expect(
+      controller.getFrameCount({ timecode: '00:00:10:00', framerate: 25 }),
+    ).toStrictEqual(result);
   });
 
   it('should return 00:04:10:00 with time code route and pass args 250, frame, 25', () => {
     const result = {
-      queries: { framerate: 25, time: '250', unit: 'seconds' },
+      queries: { framerate: 25, time: 250, unit: 'seconds' },
       result: '00:04:10:00',
     };
-    expect(controller.getTimeCode('250', 'seconds', 25)).toStrictEqual(result);
+    expect(
+      controller.getTimeCode({ time: 250, unit: 'seconds', framerate: 25 }),
+    ).toStrictEqual(result);
+  });
+
+  it('should return 00:04:10:00 with time code route and pass args 250, frame, 25', () => {
+    const result = {
+      queries: { framerate: 25, time: '250', unit: 'frames' },
+      result: '00:00:10:00',
+    };
+    expect(
+      controller.getTimeCode({ time: 250, unit: 'frames', framerate: 25 }),
+    ).toStrictEqual(result);
   });
 
   it('should return 250 with seconds route', () => {
@@ -41,7 +55,9 @@ describe('TimecodeConverterController', () => {
       queries: { timecode: '00:00:10:00', framerate: 25 },
       result: 10,
     };
-    expect(controller.getSeconds('00:00:10:00', 25)).toStrictEqual(result);
+    expect(
+      controller.getSeconds({ timecode: '00:00:10:00', framerate: 25 }),
+    ).toStrictEqual(result);
   });
 
   it('should return 6310 with seconds route', () => {
@@ -49,7 +65,9 @@ describe('TimecodeConverterController', () => {
       queries: { timecode: '01:45:10:00', framerate: 25 },
       result: 6310,
     };
-    expect(controller.getSeconds('01:45:10:00', 25)).toStrictEqual(result);
+    expect(
+      controller.getSeconds({ timecode: '01:45:10:00', framerate: 25 }),
+    ).toStrictEqual(result);
   });
 
   it('should return 10000 with milliseconds route', () => {
@@ -57,7 +75,9 @@ describe('TimecodeConverterController', () => {
       queries: { timecode: '00:00:10:00', framerate: 25 },
       result: 10000,
     };
-    expect(controller.getMilliseconds('00:00:10:00', 25)).toStrictEqual(result);
+    expect(
+      controller.getMilliseconds({ timecode: '00:00:10:00', framerate: 25 }),
+    ).toStrictEqual(result);
   });
 
   it('should return 6310000 with seconds route', () => {
@@ -65,7 +85,9 @@ describe('TimecodeConverterController', () => {
       queries: { timecode: '01:45:10:00', framerate: 25 },
       result: 6310000,
     };
-    expect(controller.getMilliseconds('01:45:10:00', 25)).toStrictEqual(result);
+    expect(
+      controller.getMilliseconds({ timecode: '01:45:10:00', framerate: 25 }),
+    ).toStrictEqual(result);
   });
 
   it('should return 00:04:00:00 with addition route', () => {
@@ -80,7 +102,11 @@ describe('TimecodeConverterController', () => {
       result: '00:04:00:00',
     };
     expect(
-      controller.getAddition('00:03:00:24', '00:00:59:01', 25),
+      controller.getAddition({
+        start: '00:03:00:24',
+        end: '00:00:59:01',
+        framerate: 25,
+      }),
     ).toStrictEqual(result);
   });
 
@@ -97,7 +123,11 @@ describe('TimecodeConverterController', () => {
     };
 
     expect(
-      controller.getSubtraction('00:04:00:00', '00:00:59:01', 25),
+      controller.getSubtraction({
+        start: '00:04:00:00',
+        end: '00:00:59:01',
+        framerate: 25,
+      }),
     ).toStrictEqual(result);
   });
 });
